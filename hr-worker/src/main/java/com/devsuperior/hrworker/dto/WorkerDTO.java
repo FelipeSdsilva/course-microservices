@@ -1,28 +1,28 @@
-package com.devsuperior.hrworker.entities;
+package com.devsuperior.hrworker.dto;
 
-import jakarta.persistence.*;
+import com.devsuperior.hrworker.entities.Worker;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-@Entity
-@Table(name = "tb_worker")
-public class Worker implements Serializable {
+public class WorkerDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Double dailyIncome;
 
-    public Worker() {
+    public WorkerDTO() {
     }
 
-    public Worker(Long id, String name, Double dailyIncome) {
+    public WorkerDTO(Long id, String name, Double dailyIncome) {
         this.id = id;
         this.name = name;
         this.dailyIncome = dailyIncome;
+    }
+
+    public WorkerDTO(Worker entity) {
+        BeanUtils.copyProperties(entity, this);
     }
 
     public Long getId() {
@@ -47,17 +47,5 @@ public class Worker implements Serializable {
 
     public void setDailyIncome(Double dailyIncome) {
         this.dailyIncome = dailyIncome;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Worker worker)) return false;
-        return getId().equals(worker.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
     }
 }
